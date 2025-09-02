@@ -50,3 +50,22 @@ async function createMedicine(req,res){
 }
 
 // Update
+async function updateMedicine(req,res){
+    try{
+        const medicine = await Medicine.findByIdAndUpdate(
+            req.params.medicineId,
+            req.body,
+            {new: true }
+        )
+        if (medicine){
+            res.status(200).json(medicine)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in Updating Medicine:", error)
+        res.status(500).json({error: error.message})
+    }
+}
