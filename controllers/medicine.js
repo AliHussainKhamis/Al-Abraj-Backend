@@ -31,3 +31,22 @@ async function showMedicine(req,res){
         res.status(500).json({error: error.message})
     }
 }
+
+// Create
+async function createMedicine(req,res){
+    try{
+        const newMedicine = await Medicine.create(req.body)
+        if(newMedicine){
+            res.status(200).json(newMedicine)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in creating Medicine:", error)
+        res.status(500).json({error: error.message})
+    }
+}
+
+// Update
