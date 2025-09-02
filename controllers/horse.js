@@ -37,7 +37,7 @@ async function showHorse(req,res){
 // Create
 async function newHorse(req,res){
     try{
-        const horse = await Horse.create()
+        const horse = await Horse.create(req.body)
         if(horse){
             res.status(200).json(horse)
         }
@@ -54,7 +54,11 @@ async function newHorse(req,res){
 // Update
 async function updateHorse(req,res){
     try{
-        const horse = await Horse.findByIdAndUpdate()
+        const horse = await Horse.findByIdAndUpdate(
+            req.params.horseId,
+            req.body,
+            {new : true}
+        )
         if(horse){
             res.status(200).json(horse)
         }
@@ -71,7 +75,7 @@ async function updateHorse(req,res){
 // Delete
 async function deleteHorse(req,res){
     try{
-        const horse = await Horse.findByIdAndDelete()
+        const horse = await Horse.findByIdAndDelete(req.params.horseId)
         if(horse){
             res.status(200).json(horse)
         }
@@ -83,4 +87,12 @@ async function deleteHorse(req,res){
         console.log("Error in deleting the Horse:",error)
         res.status(500).json({error: error.message})
     }
+}
+
+module.exports = {
+    getHorse,
+    showHorse,
+    newHorse,
+    updateHorse,
+    deleteHorse,
 }
