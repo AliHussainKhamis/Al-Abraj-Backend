@@ -29,12 +29,58 @@ async function showHorse(req,res){
         }
     }
     catch(error){
-        console.log("Error in finding Horses:",error)
+        console.log("Error in finding Horse:",error)
         res.status(500).json({error: error.message})
     }
 }
+
 // Create
+async function newHorse(req,res){
+    try{
+        const horse = await Horse.create()
+        if(horse){
+            res.status(200).json(horse)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in creating a new Horse:",error)
+        res.status(500).json({error: error.message})
+    }
+}
 
 // Update
+async function updateHorse(req,res){
+    try{
+        const horse = await Horse.findByIdAndUpdate()
+        if(horse){
+            res.status(200).json(horse)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in updating the Horse:",error)
+        res.status(500).json({error: error.message})
+    }
+}
 
 // Delete
+async function deleteHorse(req,res){
+    try{
+        const horse = await Horse.findByIdAndDelete()
+        if(horse){
+            res.status(200).json(horse)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in deleting the Horse:",error)
+        res.status(500).json({error: error.message})
+    }
+}
