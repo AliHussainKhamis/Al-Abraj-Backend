@@ -6,6 +6,7 @@ const cors = require("cors")
 
 // Route
 const medicineRoute = require("./routes/medicineRoutes")
+const horseRoute = require('./routes/horseRoutes')
 
 const app = express()
 app.use(cors())
@@ -14,6 +15,7 @@ app.use(morgan('dev'))
 
 // Route - app.use
 app.use("/medicine",medicineRoute)
+app.use("/horse",horseRoute)
 
 // Port
 const PORT = process.env.PORT || 5000
