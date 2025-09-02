@@ -51,3 +51,36 @@ async function newHorse(req,res){
     }
 }
 
+// Update
+async function updateHorse(req,res){
+    try{
+        const horse = await Horse.findByIdAndUpdate()
+        if(horse){
+            res.status(200).json(horse)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in updating the Horse:",error)
+        res.status(500).json({error: error.message})
+    }
+}
+
+// Delete
+async function deleteHorse(req,res){
+    try{
+        const horse = await Horse.findByIdAndDelete()
+        if(horse){
+            res.status(200).json(horse)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error in deleting the Horse:",error)
+        res.status(500).json({error: error.message})
+    }
+}
