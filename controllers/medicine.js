@@ -16,7 +16,18 @@ async function indexMedicine(req, res) {
 }
 
 // Details
-const getMedicine = async (req, res) => {
-  const med = await Medicine.findById(req.params.id);
-  res.json(med)
+async function showMedicine(req,res){
+    try{
+        const medicine = await Medicine.findById()
+        if (medicine){
+            res.status(200).json(medicine)
+        }
+        else{
+            res.sendStatus(204)
+        }
+    }
+    catch(error){
+        console.log("Error finding medicine: ", error)
+        res.status(500).json({error: error.message})
+    }
 }
