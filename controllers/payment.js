@@ -36,8 +36,11 @@ async function showPayment(req, res) {
 async function createPayment(req, res) {
   try {
     const newPayment = await Payment.create(req.body)
-    if (newPayment) {
-      res.status(200).json(newPayment)
+    const populated = await Payment.findById(newPayment._id)
+      .populate("ownerId")
+      .populate("horseId")
+    if (populated) {
+      res.status(200).json(populated)
     } else {
       res.sendStatus(204)
     }
@@ -46,6 +49,7 @@ async function createPayment(req, res) {
     res.status(500).json({ error: error.message })
   }
 }
+
 
 // Update
 async function updatePayment(req, res) {

@@ -5,7 +5,7 @@ const horseSchema = new mongoose.Schema({
   name: String,
   age: Number,
   breed: String,
-  owner: String,  
+  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },  
   notes: String,
 })
 

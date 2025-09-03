@@ -1,3 +1,4 @@
+// controllers/medicineController.js
 const Medicine = require("../models/Medicine")
 
 // Index
@@ -16,81 +17,73 @@ async function indexMedicine(req, res) {
 }
 
 // Details
-async function showMedicine(req,res){
-    try{
-        const medicine = await Medicine.findById()
-        if (medicine){
-            res.status(200).json(medicine)
-        }
-        else{
-            res.sendStatus(204)
-        }
+async function showMedicine(req, res) {
+  try {
+    const medicine = await Medicine.findById(req.params.medicineId)
+    if (medicine) {
+      res.status(200).json(medicine)
+    } else {
+      res.sendStatus(204)
     }
-    catch(error){
-        console.log("Error finding medicine: ", error)
-        res.status(500).json({error: error.message})
-    }
+  } catch (error) {
+    console.log("Error finding medicine: ", error)
+    res.status(500).json({ error: error.message })
+  }
 }
 
 // Create
-async function createMedicine(req,res){
-    try{
-        const newMedicine = await Medicine.create(req.body)
-        if(newMedicine){
-            res.status(200).json(newMedicine)
-        }
-        else{
-            res.sendStatus(204)
-        }
+async function createMedicine(req, res) {
+  try {
+    const newMedicine = await Medicine.create(req.body)
+    if (newMedicine) {
+      res.status(200).json(newMedicine)
+    } else {
+      res.sendStatus(204)
     }
-    catch(error){
-        console.log("Error in creating Medicine:", error)
-        res.status(500).json({error: error.message})
-    }
+  } catch (error) {
+    console.log("Error in creating Medicine:", error)
+    res.status(500).json({ error: error.message })
+  }
 }
 
 // Update
-async function updateMedicine(req,res){
-    try{
-        const medicine = await Medicine.findByIdAndUpdate(
-            req.params.medicineId,
-            req.body,
-            {new: true }
-        )
-        if (medicine){
-            res.status(200).json(medicine)
-        }
-        else{
-            res.sendStatus(204)
-        }
+async function updateMedicine(req, res) {
+  try {
+    const medicine = await Medicine.findByIdAndUpdate(
+      req.params.medicineId,
+      req.body,
+      { new: true }
+    )
+    if (medicine) {
+      res.status(200).json(medicine)
+    } else {
+      res.sendStatus(204)
     }
-    catch(error){
-        console.log("Error in Updating Medicine:", error)
-        res.status(500).json({error: error.message})
-    }
+  } catch (error) {
+    console.log("Error in Updating Medicine:", error)
+    res.status(500).json({ error: error.message })
+  }
 }
 
 // Delete
-async function deleteMedicine(req,res){
-    try{
-      const medicine = await Medicine.findByIdAndDelete(req.params.medicineId)
-      if(medicine){
-        res.status(200).json(medicine)
-      }
-      else{
-        res.sendStatus(204)
-      }  
+async function deleteMedicine(req, res) {
+  try {
+    const medicine = await Medicine.findByIdAndDelete(req.params.medicineId)
+    if (medicine) {
+      res.status(200).json(medicine)
+    } else {
+      res.sendStatus(204)
     }
-        catch(error){
-        console.log("Error in deleting Medicine: ", error)
-        res.status(500).json({error: error.message})
-    }
+  } catch (error) {
+    console.log("Error in deleting Medicine: ", error)
+    res.status(500).json({ error: error.message })
+  }
 }
 
 module.exports = {
-    indexMedicine,
-    showMedicine,
-    createMedicine,
-    updateMedicine,
-    deleteMedicine
+  indexMedicine,
+  showMedicine,
+  createMedicine,
+  updateMedicine,
+  deleteMedicine
 }

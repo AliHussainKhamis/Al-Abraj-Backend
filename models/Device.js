@@ -1,9 +1,10 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 const deviceSchema = new mongoose.Schema({
-  name: String,
-  topic: String,
-  place: { type: mongoose.Schema.Types.ObjectId, ref: 'Horse', required: true, unique: true },
+  mqttTopic: { type: String, required: true }, 
+  description: String,
+  name: { type: String, required: true },
+  room: { type: String, required: true },
 })
 
-module.exports = mongoose.model("Payment", deviceSchema)
+module.exports = mongoose.model('Device', deviceSchema);
