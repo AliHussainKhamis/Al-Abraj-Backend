@@ -80,3 +80,73 @@ async function deletePayment(req, res) {
     res.status(500).json({ error: error.message })
   }
 }
+
+// <<<<<<<<<<  PAYMENT CHECK  >>>>>>>>>>
+
+// Owner marks as paid 
+async function ownerMarkPayment(req, res) {
+  try {
+    const payment = await Payment.findByIdAndUpdate(
+      req.params.paymentId,
+      { ownerMarkedPaidOn: new Date(), status: "waiting-confirmation" },
+      { new: true }
+    )
+    if (payment) {
+      res.status(200).json(payment)
+    } else {
+      res.sendStatus(204)
+    }
+  } catch (error) {
+    console.log("Error owner-marking payment: ", error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
+// Admin confirms payment
+async function adminConfirmPayment(req, res) {
+  try {
+    const payment = await Payment.findByIdAndUpdate(
+      req.params.paymentId,
+      { confirmedPaidOn: new Date(), confirmedBy: req.body.adminId, status: "paid" },
+      { new: true }
+    )
+    if (payment) {
+      res.status(200).json(payment)
+    } else {
+      res.sendStatus(204)
+    }
+  } catch (error) {
+    console.log("Error confirming payment: ", error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
+// Admin rejects payment
+async function adminRejectPayment(req, res) {
+  try {
+    const payment = await Payment.findByIdAndUpdate(
+      req.params.paymentId,
+      { status: "rejected" },
+      { new: true }
+    )
+    if (payment) {
+      res.status(200).json(payment)
+    } else {
+      res.sendStatus(204)
+    }
+  } catch (error) {
+    console.log("Error rejecting payment: ", error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
+module.exports = {
+  indexPayment,
+  showPayment,
+  createPayment,
+  updatePayment,
+  deletePayment,
+  ownerMarkPayment,
+  adminConfirmPayment,
+  adminRejectPayment
+}
