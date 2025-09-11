@@ -1,14 +1,15 @@
 const router = require("express").Router()
-const medicineController = require("../controllers/payment")
+const paymentController = require("../controllers/payment")
 
-router.get("/", indexPayment)
-router.get("/:paymentId", showPayment)
-router.post("/", createPayment)
-router.put("/:paymentId", updatePayment)
-router.delete("/:paymentId", deletePayment)
+router.get("/", paymentController.indexPayment)
+router.get("/:paymentId", paymentController.showPayment)
+router.post("/", paymentController.createPayment)
+router.delete("/:paymentId", paymentController.deletePayment)
 
-router.put("/:paymentId/owner-mark", ownerMarkPayment)
-router.put("/:paymentId/admin-confirm", adminConfirmPayment)
-router.put("/:paymentId/admin-reject", adminRejectPayment)
+// owner actions
+router.put("/:paymentId/owner-mark", paymentController.ownerMarkPayment)
+// Admin actions
+router.put("/:paymentId/admin-confirm/:ownerId", paymentController.adminConfirmPayment)
+router.put("/:paymentId/admin-reject/:ownerId", paymentController.adminRejectPayment)
 
 module.exports = router

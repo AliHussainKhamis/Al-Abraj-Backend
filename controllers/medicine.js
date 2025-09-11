@@ -1,4 +1,3 @@
-// controllers/medicineController.js
 const Medicine = require("../models/Medicine")
 
 // Index

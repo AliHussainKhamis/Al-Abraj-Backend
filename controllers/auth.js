@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
     if (!isValid) return res.status(401).json({ message: 'Invalid username or password' })
 
     const payload = { id: user._id, role: user.role }
-    const token = jwt.sign(payload, SECRET, { expiresIn: '1h' })
+    const token = jwt.sign(payload, SECRET, { expiresIn: '5h' })
 
     // 
     res.json({

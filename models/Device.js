@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 
 const deviceSchema = new mongoose.Schema({
-  mqttTopic: { type: String, required: true }, 
+  mqttTopic: { type: String, required: true },
+  name:      { type: String, required: true },
+  room:      { type: String, required: true },
   description: String,
-  name: { type: String, required: true },
-  room: { type: String, required: true },
-})
 
-module.exports = mongoose.model('Device', deviceSchema);
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  horseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Horse' }
+}, { timestamps: true })
+
+module.exports = mongoose.model('Device', deviceSchema)

@@ -1,4 +1,3 @@
-// controllers/horseController.js
 const Horse = require("../models/Horse")
 
 // Index
@@ -34,19 +33,20 @@ async function showHorse(req, res) {
 // Create
 async function newHorse(req, res) {
   try {
-    const horse = await Horse.create(req.body)
-    if (horse) {
-      res.status(200).json(horse)
-    } else {
-      res.sendStatus(204)
+    const data = req.body
+    if (!data.image) {
+      return res.status(400).json({ error: "Image is required" })
     }
+    const horse = await Horse.create(data)
+    res.status(201).json(horse)
   } catch (error) {
-    console.log("Error in creating a new Horse:", error)
+    console.log("Error creating horse:", error)
     res.status(500).json({ error: error.message })
   }
 }
 
-// Update
+
+// Update 
 async function updateHorse(req, res) {
   try {
     const horse = await Horse.findByIdAndUpdate(
@@ -54,16 +54,15 @@ async function updateHorse(req, res) {
       req.body,
       { new: true }
     ).populate("ownerId")
-    if (horse) {
-      res.status(200).json(horse)
-    } else {
-      res.sendStatus(204)
-    }
+
+    if (!horse) return res.sendStatus(404)
+    res.status(200).json(horse)
   } catch (error) {
-    console.log("Error in updating the Horse:", error)
+    console.log("Error updating horse:", error)
     res.status(500).json({ error: error.message })
   }
 }
+
 
 // Delete
 async function deleteHorse(req, res) {

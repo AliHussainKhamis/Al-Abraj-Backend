@@ -5,12 +5,16 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
 
-  role: { type: String, enum: ['admin', 'owner'], default: 'owner' },
+  role: { 
+    type: String, 
+    enum: ['admin', 'owner'], 
+    default: 'owner',
+    lowercase: true    // <-- saved in lowercase
+  },
 
   phone: String,
   address: String,
 }, { timestamps: true })
-
 
 userSchema.methods.validatePassword = function (password) {
   return bcrypt.compare(password, this.passwordHash)

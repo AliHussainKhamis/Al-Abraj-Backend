@@ -1,20 +1,19 @@
 const mongoose = require("mongoose")
 
 const paymentSchema = new mongoose.Schema({
-  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },  
-  horseId: { type: mongoose.Schema.Types.ObjectId, ref: "Horse" }, 
+  description: String,
   amount: Number,
   dueDate: Date,
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 
-  // owner 
-  ownerMarkedPaidOn: Date,
-  ownerNote: String,
-
-  // admin confirmation
-  confirmedPaidOn: Date,
-  confirmedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-
-  status: { type: String, default: "pending" }, 
+  payments: [
+    {
+      ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      status: { type: String, default: "pending" },
+      paidOn: Date,
+      confirmedPaidOn: Date
+    }
+  ]
 }, { timestamps: true })
 
 module.exports = mongoose.model("Payment", paymentSchema)
